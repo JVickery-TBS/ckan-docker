@@ -70,7 +70,6 @@ services:
       - ~/.ssh/id_rsa:/srv/app/.ssh/id_rsa:ro
       - ~/.ssh/id_rsa.pub:/srv/app/.ssh/id_rsa.pub:ro
       - $SSH_AUTH_SOCK:/ssh-agent:ro
-      - $CA_LOCAL_ROOT:/etc/ssl/mkcert:ro
     ports:
       - 5001:5001
 #

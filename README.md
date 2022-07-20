@@ -12,6 +12,9 @@
 ## Pre-Build
 
 1. __Make__ `mkdir nginx postgres redis solr ckan`
+1. __Copy__ `cp .env_example .env`
+1. __Change__ `USER_ID` in .env to your local uid
+1. __Change__ `GROUP_ID` in .env to your local gid
 1. __Copy__ `cp registry_example.ini registry.ini`
 1. __Change__ `ckanext.cloudstorage.container_name` in registry.ini value to `<your user name>-dev`
 1. __Change__ `ckanext.cloudstorage.driver_options` in registry.ini secret value to the secret key for `opencanadastaging`
@@ -27,6 +30,11 @@
    * To stop all the containers: `docker-compose down`
 
 ## Installation
+
+### Databases
+
+1. __Bring up__ the CKAN Registry docker container: `docker-compose up -d ckan`
+1. __Run__ the install script in the docker container: `docker-compose exec ckan ./fix-databases.sh`
 
 ### CKAN
 

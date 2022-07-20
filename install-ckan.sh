@@ -14,8 +14,6 @@ pip install --upgrade pip
 pip install wheel
 # update certifi
 pip install --upgrade certifi
-# copy CA root pem chain
-cp /etc/ssl/mkcert/rootCA.pem ${APP_ROOT}/ckan/${CKAN_ROLE}/lib/python${PY_VERSION}/site-packages/certifi/cacert.pem
 # install correct version of cryptography
 pip install cryptography
 # install shh for git usage

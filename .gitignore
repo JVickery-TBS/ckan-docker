@@ -15,7 +15,8 @@ node_modules/
 /docker/config/nginx/conf/.env.conf
 /docker/config/nginx/conf/.upstream_servers.conf
 /_config/
-registry.ini
+/registry.ini
+/.env
 
 # Build
 /*.1
@@ -37,4 +38,5 @@ pgrestore.log
 /docker/config/solr/certs/*.jks
 /docker/config/solr/certs/*.p12
 /docker/config/solr/cores/*/data/
-registry.ini
+/registry.ini
+/.env
