@@ -1,0 +1,40 @@
+# IDEs
+.idea/
+*.code-workspace
+
+# Package Managers
+vendor/
+node_modules/
+/package-lock.json
+
+# Misc.
+.DS_Store/
+
+# Project variables
+# /.env
+/docker/config/nginx/conf/.env.conf
+/docker/config/nginx/conf/.upstream_servers.conf
+/_config/
+registry.ini
+
+# Build
+/*.1
+/django/
+/drupal/
+/ckan/
+/solr/
+/redis/
+/postgres/
+/backup/
+/nginx/
+supervisord.log
+/.ssh/
+/paster.log
+pgrestore.log
+/Pipfile
+/docker/config/nginx/certs/*.pem
+/docker/config/solr/certs/*.pem
+/docker/config/solr/certs/*.jks
+/docker/config/solr/certs/*.p12
+/docker/config/solr/cores/*/data/
+registry.ini

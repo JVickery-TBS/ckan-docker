@@ -1,0 +1,200 @@
+version: "3"
+services:
+#
+# CKAN Registry
+#
+  ckan-dev:
+    container_name: dev-og-ckan-registry
+    image: openknowledge/ckan-dev-dev:2.10
+    build:
+      context: .
+      dockerfile: docker/ckan/Dockerfile
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    healthcheck:
+      test: /srv/app/ckan/registry/bin/uwsgi --connect-and-read 127.0.0.1:1717 || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    working_dir: /srv/app
+    depends_on:
+      postgres-dev:
+        condition: service_started
+      solr-dev:
+        condition: service_healthy
+      redis-dev:
+        condition: service_healthy
+    links:
+      - postgres-dev
+      - solr-dev
+    env_file:
+      - .docker.env
+    environment:
+      CONTAINER_ROLE: ckan
+      CKAN_ROLE: registry
+      PGHOST: postgres-dev
+      PGDATABASE: postgres
+      PGUSER: homestead
+      PGPASSWORD: secret
+      SSH_AUTH_SOCK: /ssh-agent
+      NGINX_UNAME: ckan
+      APP_ROOT: /srv/app
+      PATH: '$PATH:/srv/app/ckan/registry/bin'
+      PY_VERSION: 3.9
+      PIP_VERSION: 22.0.4
+      SETUP_TOOLS_VERSION: 44.1.0
+      WET_VERSION: v4.0.31
+      GCWEB_VERSION: v5.1
+      PYTHONHTTPSVERIFY: 0
+      SSL_CERT_FILE: /etc/ssl/mkcert/rootCA.pem
+      SSL_CERT_DIR: /etc/ssl/mkcert
+      SSL_VERIFY: 0
+      PORTAL_CONFIG: /srv/app/ckan/portal/portal.ini
+      REGISTRY_CONFIG: /srv/app/ckan/registry/registry.ini
+      CKAN_INI: /srv/app/ckan/registry/registry.ini
+      DATA_URI: https://open.canada.ca/data
+      REQUESTS_CA_BUNDLE: /etc/ssl/certs/ca-certificates.crt
+    volumes:
+      - ./docker/config/ckan:/docker-entrypoint.d
+      - .:/srv/app
+      - ./docker/config/nginx/certs:/usr/share/certs
+      - ./docker/config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/config/ckan/apache:/etc/apache2/sites-available
+      - ./docker/config/ckan/apache/registry.apache2.conf:/etc/apache2/apache2.conf
+      - ./docker/config/ckan/apache/ports.conf:/etc/apache2/ports.conf
+      - ./docker/config/ckan/wsgi:/etc/ckan/registry
+      - ~/.gitconfig:/etc/gitconfig:ro
+      - ~/.ssh/id_ecdsa:/srv/app/.ssh/id_ecdsa:ro
+      - ~/.ssh/id_ecdsa.pub:/srv/app/.ssh/id_ecdsa.pub:ro
+      - ~/.ssh/id_rsa:/srv/app/.ssh/id_rsa:ro
+      - ~/.ssh/id_rsa.pub:/srv/app/.ssh/id_rsa.pub:ro
+      - $SSH_AUTH_SOCK:/ssh-agent:ro
+      - $CA_LOCAL_ROOT:/etc/ssl/mkcert:ro
+    ports:
+      - 5001:5001
+#
+# Postgres
+#
+  postgres-dev:
+    container_name: dev-og-postgres
+    image: postgres:9.6
+    restart: always
+    healthcheck:
+      test: pg_isready -U postgres || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+      - ./docker/config/postgres:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: og_drupal_local__dev
+      POSTGRES_USER: homestead
+      POSTGRES_PASSWORD: secret
+      POSTGRES_HOST_AUTH_METHOD: trust
+    env_file:
+      - .docker.env
+    user: "${USER_ID:-0}:${GROUP_ID:-0}"
+    ports:
+      - 15438:5432
+# END
+# Postgres
+# END
+#
+# Solr
+#
+  solr-dev:
+    container_name: dev-og-solr
+    image: solr-dev
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/solr/Dockerfile
+    healthcheck:
+      test: solr status || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    working_dir: /opt/solr
+    volumes:
+      - ./docker/config/solr/certs:/opt/solr/server/certs
+      - ./docker/config/solr/certs/solr.p12:/etc/solr.p12
+      - ./docker/config/nginx/certs:/usr/share/certs
+      # Persisting CKAN Solr Cores
+      - ./solr/ckan_registry__dev:/var/solr/data/ckan_registry__dev
+      - ./solr/ckan_portal__dev:/var/solr/data/ckan_portal__dev
+      - ./solr/core_ati__dev:/var/solr/data/core_ati__dev
+      - ./solr/core_contracts__dev:/var/solr/data/core_contracts__dev
+      - ./solr/core_grants__dev:/var/solr/data/core_grants__dev
+      - ./solr/core_hospitalityq__dev:/var/solr/data/core_hospitalityq__dev
+      - ./solr/core_inventory__dev:/var/solr/data/core_inventory__dev
+      - ./solr/core_reclassification__dev:/var/solr/data/core_reclassification__dev
+      - ./solr/core_travela__dev:/var/solr/data/core_travela__dev
+      - ./solr/core_travelq__dev:/var/solr/data/core_travelq__dev
+      - ./solr/core_wrongdoing__dev:/var/solr/data/core_wrongdoing__dev
+      # Persisting Django Solr Cores
+      - ./solr/core_od_search__dev:/var/solr/data/core_od_search__dev
+      - ./solr/core_bn_search__dev:/var/solr/data/core_bn_search__dev
+      - ./solr/core_ati_search__dev:/var/solr/data/core_ati_search__dev
+      - ./solr/core_ei_search__dev:/var/solr/data/core_ei_search__dev
+      - ./solr/core_ct_search__dev:/var/solr/data/core_ct_search__dev
+      - ./solr/core_gc_search__dev:/var/solr/data/core_gc_search__dev
+      - ./solr/core_ap_search__dev:/var/solr/data/core_ap_search__dev
+      - ./solr/core_sv_search__dev:/var/solr/data/core_sv_search__dev
+      - ./solr/core_qp_search__dev:/var/solr/data/core_qp_search__dev
+      - ./solr/core_sd_search__dev:/var/solr/data/core_sd_search__dev
+      # Persisting Drupal Solr Cores
+      - ./solr/drupal_content__dev:/var/solr/data/drupal_content__dev
+      # Base Solr Cores
+      - ./docker/config/solr/cores:/var/solr/local_data
+    environment:
+      - CONTAINER_ROLE=solr
+      - NGINX_UNAME=root
+      - SOLR_SSL_ENABLED=false
+      - SOLR_SSL_KEY_STORE=/etc/solr.p12
+      - SOLR_SSL_KEY_STORE_PASSWORD=changeit
+      - SOLR_SSL_TRUST_STORE=/etc/solr.p12
+      - SOLR_SSL_TRUST_STORE_PASSWORD=changeit
+      - SOLR_SSL_NEED_CLIENT_AUTH=false
+      - SOLR_SSL_WANT_CLIENT_AUTH=false
+      - SOLR_SSL_CHECK_PEER_NAME=true
+      - SOLR_SSL_KEY_STORE_TYPE=PKCS12
+      - SOLR_SSL_TRUST_STORE_TYPE=PKCS12
+    user: "root:root"
+    ports:
+      - 8981:8983
+# END
+# Solr
+# END
+#
+# Redis
+#
+  redis-dev:
+    container_name: dev-og-redis
+    image: redis
+    restart: always
+    healthcheck:
+      test: redis-cli info server || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    working_dir: /data
+    volumes:
+      - ./docker/config/nginx/certs:/usr/share/certs
+      # - ./redis:/data
+    environment:
+      - CONTAINER_ROLE=redis
+      - NGINX_UNAME=root
+    user: "root:root"
+    ports:
+      - 6979:6379
+# END
+# Redis
+# END
+
+volumes:
+  postgres:
+    driver: "local"
+  solr:
+    driver: "local"
