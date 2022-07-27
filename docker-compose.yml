@@ -47,8 +47,6 @@ services:
       WET_VERSION: v4.0.31
       GCWEB_VERSION: v5.1
       PYTHONHTTPSVERIFY: 0
-      SSL_CERT_FILE: /etc/ssl/mkcert/rootCA.pem
-      SSL_CERT_DIR: /etc/ssl/mkcert
       SSL_VERIFY: 0
       PORTAL_CONFIG: /srv/app/ckan/portal/portal.ini
       REGISTRY_CONFIG: /srv/app/ckan/registry/registry.ini
