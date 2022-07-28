@@ -17,6 +17,7 @@ node_modules/
 /_config/
 /registry.ini
 /.env
+/.python.env
 
 # Build
 /*.1
