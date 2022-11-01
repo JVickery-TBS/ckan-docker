@@ -3,9 +3,9 @@ services:
 #
 # CKAN Registry
 #
-  ckan-dev:
-    container_name: dev-og-ckan-registry
-    image: openknowledge/ckan-dev-dev:2.10
+  ckan-devm:
+    container_name: devm-og-ckan-registry
+    image: openknowledge/ckan-dev-devm:2.10
     build:
       context: .
       dockerfile: docker/ckan/Dockerfile
@@ -19,21 +19,21 @@ services:
       retries: 3
     working_dir: /srv/app
     depends_on:
-      postgres-dev:
+      postgres-devm:
         condition: service_started
-      solr-dev:
+      solr-devm:
         condition: service_healthy
-      redis-dev:
+      redis-devm:
         condition: service_healthy
     links:
-      - postgres-dev
-      - solr-dev
+      - postgres-devm
+      - solr-devm
     env_file:
       - .docker.env
     environment:
       CONTAINER_ROLE: ckan
       CKAN_ROLE: registry
-      PGHOST: postgres-dev
+      PGHOST: postgres-devm
       PGDATABASE: postgres
       PGUSER: homestead
       PGPASSWORD: secret
@@ -69,12 +69,12 @@ services:
       - ~/.ssh/id_rsa.pub:/srv/app/.ssh/id_rsa.pub:ro
       - $SSH_AUTH_SOCK:/ssh-agent:ro
     ports:
-      - 5001:5001
+      - 5009:5001
 #
 # Postgres
 #
-  postgres-dev:
-    container_name: dev-og-postgres
+  postgres-devm:
+    container_name: devm-og-postgres
     image: postgres:9.6
     restart: always
     healthcheck:
@@ -94,16 +94,16 @@ services:
       - .docker.env
     user: "${USER_ID:-0}:${GROUP_ID:-0}"
     ports:
-      - 15438:5432
+      - 15439:5432
 # END
 # Postgres
 # END
 #
 # Solr
 #
-  solr-dev:
-    container_name: dev-og-solr
-    image: solr-dev
+  solr-devm:
+    container_name: devm-og-solr
+    image: solr-devm
     restart: always
     build:
       context: .
@@ -159,16 +159,16 @@ services:
       - SOLR_SSL_KEY_STORE_TYPE=PKCS12
       - SOLR_SSL_TRUST_STORE_TYPE=PKCS12
     user: "root:root"
-    ports:
-      - 8981:8983
+    expose:
+      - 8983
 # END
 # Solr
 # END
 #
 # Redis
 #
-  redis-dev:
-    container_name: dev-og-redis
+  redis-devm:
+    container_name: devm-og-redis
     image: redis
     restart: always
     healthcheck:
@@ -184,8 +184,8 @@ services:
       - CONTAINER_ROLE=redis
       - NGINX_UNAME=root
     user: "root:root"
-    ports:
-      - 6979:6379
+    expose:
+      - 6379
 # END
 # Redis
 # END

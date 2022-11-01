@@ -13,18 +13,10 @@ pip install --upgrade pip
 # install wheel
 pip install wheel
 # update certifi
-pip install --upgrade certifi
-# install correct version of cryptography
-pip install cryptography
-# install shh for git usage
-which ssh || apt install ssh -y
-# add git as trusted source
-echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
-ssh -T git@github.com
 # install forked ckan core
-pip install -e git+ssh://git@github.com/JVickery-TBS/ckan.git#egg=ckan -r https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt
+pip install -e 'git+https://git@github.com/JVickery-TBS/ckan.git#egg=ckan' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt'
 # install xloader
-pip install -e 'git+ssh://git@github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/pip-requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/dev-requirements.txt'
+pip install -e 'git+https://git@github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/dev-requirements.txt'
 # install flask admin
 pip install Flask-Admin
 # install flask login
@@ -35,8 +27,6 @@ pip install Flask-SQLAlchemy
 pip install flask_debugtoolbar
 # install request with security modules
 pip install requests[security]==2.26.0
-# install correct version of cryptography
-pip install cryptography
 # install responses
 pip install responses
 # install uwsgi
