@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# nuke existing install
+rm -rf ${APP_ROOT}/ckan/registry/*
+rm -rf ${APP_ROOT}/ckan/registry/.??*
+
 # initiate python3 venv
 python3 -m venv ${APP_ROOT}/ckan/registry
 # set ownership
@@ -14,9 +18,9 @@ pip install --upgrade pip
 pip install wheel
 # update certifi
 # install forked ckan core
-pip install -e 'git+https://git@github.com/JVickery-TBS/ckan.git#egg=ckan' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt'
+pip install -e 'git+https://github.com/JVickery-TBS/ckan.git#egg=ckan' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt'
 # install xloader
-pip install -e 'git+https://git@github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/dev-requirements.txt'
+pip install -e 'git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/dev-requirements.txt'
 # install flask admin
 pip install Flask-Admin
 # install flask login
@@ -45,12 +49,23 @@ pip install pytest-freezegun==0.4.2
 pip install pytest-rerunfailures==10.2
 pip install pytest-split==0.7.0
 
+# correct wekzeug
+pip install werkzeug==2.1.2
+# correct flask
+pip install flask==2.1.3
+
+# re-run ckan setup.py
+cd ${APP_ROOT}/ckan/${CKAN_ROLE}/src/ckan
+python setup.py develop
+cd ${APP_ROOT}
+
 # database stuffs
 ckan db init
 ckan datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
 
 # create sysadmin user
-ckan sysadmin add admin_local password=12345678 email=temp+admin@tbs-sct.gc.ca
+ckan user add admin_local password=12345678 email=temp+admin@tbs-sct.gc.ca
+ckan sysadmin add admin_local
 
 # create normal user
 ckan user add user_local password=12345678 email=temp+user@tbs-sct.gc.ca
