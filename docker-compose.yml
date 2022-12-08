@@ -18,6 +18,9 @@ services:
       timeout: 5s
       retries: 3
     working_dir: /srv/app
+    networks:
+      ckan-core-local-network:
+        ipv4_address: 172.25.235.7
     depends_on:
       postgres-devm:
         condition: service_started
@@ -82,6 +85,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    networks:
+      ckan-core-local-network:
+        ipv4_address: 172.25.235.9
     volumes:
       - ./postgres:/var/lib/postgresql/data
       - ./docker/config/postgres:/docker-entrypoint-initdb.d
@@ -114,6 +120,9 @@ services:
       timeout: 5s
       retries: 3
     working_dir: /opt/solr
+    networks:
+      ckan-core-local-network:
+        ipv4_address: 172.25.235.10
     volumes:
       - ./docker/config/solr/certs:/opt/solr/server/certs
       - ./docker/config/solr/certs/solr.p12:/etc/solr.p12
@@ -161,6 +170,8 @@ services:
     user: "root:root"
     expose:
       - 8983
+    ports:
+      - 5008:8983
 # END
 # Solr
 # END
@@ -177,6 +188,9 @@ services:
       timeout: 5s
       retries: 3
     working_dir: /data
+    networks:
+      ckan-core-local-network:
+        ipv4_address: 172.25.235.11
     volumes:
       - ./docker/config/nginx/certs:/usr/share/certs
       # - ./redis:/data
@@ -195,3 +209,12 @@ volumes:
     driver: "local"
   solr:
     driver: "local"
+
+networks:
+  ckan-core-local-network:
+    external: false
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.235.0/24
+          gateway: 172.25.235.1
