@@ -16,6 +16,7 @@ node_modules/
 /docker/config/nginx/conf/.upstream_servers.conf
 /_config/
 /registry.ini
+/registry_test.ini
 /.env
 /.python.env
 

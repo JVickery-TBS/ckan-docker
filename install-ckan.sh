@@ -6,6 +6,9 @@ rm -rf ${APP_ROOT}/ckan/registry/.??*
 
 # initiate python3 venv
 python3 -m venv ${APP_ROOT}/ckan/registry
+# copy the config file
+cp ${APP_ROOT}/registry.ini ${APP_ROOT}/ckan/registry/registry.ini
+cp ${APP_ROOT}/registry_test.ini ${APP_ROOT}/ckan/registry/test.ini
 # set ownership
 chown ckan:ckan -R ${APP_ROOT}/ckan
 # activate venv
@@ -55,28 +58,41 @@ pip install werkzeug==2.1.2
 pip install flask==2.1.3
 
 # re-run ckan setup.py
-cd ${APP_ROOT}/ckan/${CKAN_ROLE}/src/ckan
+cd ${APP_ROOT}/ckan/registry/src/ckan
 python setup.py develop
 cd ${APP_ROOT}
 
+# copy the config file
+cp ${APP_ROOT}/registry.ini ${APP_ROOT}/ckan/registry/registry.ini
+cp ${APP_ROOT}/registry_test.ini ${APP_ROOT}/ckan/registry/test.ini
+
+# make build directory
+mkdir -p /srv/app/ckan/registry/src/ckan/build
+
+# set ownership
+chown ckan:ckan -R ${APP_ROOT}/ckan
+
 # database stuffs
-ckan db init
-ckan datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
+ckan -c ${APP_ROOT}/ckan/registry/registry.ini db init
+ckan -c ${APP_ROOT}/ckan/registry/registry.ini datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
+ckan -c ${APP_ROOT}/ckan/registry/test.ini db init
+ckan -c ${APP_ROOT}/ckan/registry/test.ini datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
 
 # create sysadmin user
-ckan user add admin_local password=12345678 email=temp+admin@tbs-sct.gc.ca
-ckan sysadmin add admin_local
+ckan -c ${APP_ROOT}/ckan/registry/registry.ini user add admin_local password=12345678 email=temp+admin@tbs-sct.gc.ca
+ckan -c ${APP_ROOT}/ckan/registry/registry.ini sysadmin add admin_local
 
 # create normal user
-ckan user add user_local password=12345678 email=temp+user@tbs-sct.gc.ca
+ckan -c ${APP_ROOT}/ckan/registry/registry.ini user add user_local password=12345678 email=temp+user@tbs-sct.gc.ca
 
 # deactivate venv
 deactivate
 # copy who.ini
-cp ${APP_ROOT}/ckan/${CKAN_ROLE}/src/ckan/who.ini ${APP_ROOT}/ckan/${CKAN_ROLE}/who.ini
+cp ${APP_ROOT}/ckan/registry/src/ckan/who.ini ${APP_ROOT}/ckan/registry/who.ini
 # copy local ini file
-cp ${APP_ROOT}/${CKAN_ROLE}.ini ${APP_ROOT}/ckan/${CKAN_ROLE}/${CKAN_ROLE}.ini
+cp ${APP_ROOT}/registry.ini ${APP_ROOT}/ckan/registry/registry.ini
+cp ${APP_ROOT}/registry_test.ini ${APP_ROOT}/ckan/registry/test.ini
 # download license file
-cp ${APP_ROOT}/licenses.json ${APP_ROOT}/ckan/${CKAN_ROLE}/licenses.json
+cp ${APP_ROOT}/licenses.json ${APP_ROOT}/ckan/registry/licenses.json
 # set ownership
 chown ckan:ckan -R ${APP_ROOT}/ckan

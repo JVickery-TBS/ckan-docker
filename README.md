@@ -16,8 +16,10 @@
 1. __Change__ `USER_ID` in .env to your local uid
 1. __Change__ `GROUP_ID` in .env to your local gid
 1. __Copy__ `cp registry_example.ini registry.ini`
-1. __Change__ `ckanext.cloudstorage.container_name` in registry.ini value to `<your user name>-dev`
-1. __Change__ `ckanext.cloudstorage.driver_options` in registry.ini secret value to the secret key for `opencanadastaging`
+1. __Copy__ `cp registry_example.ini registry_test.ini`
+1. __Change__ `ckanext.cloudstorage.container_name` in registry.ini and registry_test.ini value to `<your user name>-dev`
+1. __Change__ `ckanext.cloudstorage.driver_options` in registry.ini and registry_test.ini secret value to the secret key for `opencanadastaging`
+1. __Change__ `sqlalchemy.url`, `ckan.datastore.write_url`, `ckan.datastore.read_url`, `ckanext.xloader.jobs_db.uri` in registry_test.ini to the test databases(`__test`)
 
 ## Build
 
@@ -33,21 +35,21 @@
 
 ### Databases
 
-1. __Bring up__ the CKAN Registry docker container: `docker-compose up -d ckan`
-1. __Run__ the install script in the docker container: `docker-compose exec ckan ./fix-databases.sh`
+1. __Bring up__ the CKAN Registry docker container: `docker-compose up -d ckan-devm`
+1. __Run__ the install script in the docker container: `docker-compose exec ckan-devm ./fix-databases.sh`
 
 ### CKAN
 
-1. __Bring up__ the CKAN Registry docker container: `docker-compose up -d ckan`
-1. __Run__ the install script in the docker container: `docker-compose exec ckan ./install-ckan.sh`
+1. __Bring up__ the CKAN Registry docker container: `docker-compose up -d ckan-devm`
+1. __Run__ the install script in the docker container: `docker-compose exec ckan-devm ./install-ckan.sh`
 
 ## Usage
 
 ### CKAN
 
-1. __Bring up__ the CKAN Registry docker container: `docker-compose up -d ckan`
-1. __Open__ a browser into: `http://localhost:5001`
-   1. Login here: `http://localhost:5001/en/user/login`
+1. __Bring up__ the CKAN Registry docker container: `docker-compose up -d ckan-devm`
+1. __Open__ a browser into: `http://localhost:5009`
+   1. Login here: `http://localhost:5009/en/user/login`
       1. Normal User:
          1. Username: `user_local`
          1. Password: `12345678`
