@@ -102,26 +102,6 @@ if [[ "$role" = "ckan" ]]; then
 # END
 # CKAN Registry & Portal
 # END
-elif [[ "$role" = "solr" ]]; then
-#
-# Solr
-#
-
-    # link solr supervisord config
-    ln -sf /etc/supervisor/conf.d-available/solr.conf /etc/supervisor/conf.d/solr.conf
-
-    # copy all local core data to solr data directory
-    printf "${Green}Loading local cores${NC}${EOL}"
-    cp -R /var/solr/local_data/* /var/solr/data
-    chown -R solr:root /var/solr/data
-
-    # start supervisord service
-    printf "${Green}Executing supervisord${NC}${EOL}"
-    supervisord -c /etc/supervisor/supervisord.conf
-
-# END
-# Solr
-# END
 elif [[ "$role" = "scheduler" ]]; then
 
     # link scheduler supervisord config
