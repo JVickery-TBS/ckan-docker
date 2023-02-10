@@ -114,6 +114,9 @@ services:
     build:
       context: .
       dockerfile: docker/solr/Dockerfile
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
     healthcheck:
       test: solr status || exit 1
       interval: 10s
@@ -124,9 +127,6 @@ services:
       ckan-core-local-network:
         ipv4_address: 172.25.235.10
     volumes:
-      - ./docker/config/solr/certs:/opt/solr/server/certs
-      - ./docker/config/solr/certs/solr.p12:/etc/solr.p12
-      - ./docker/config/nginx/certs:/usr/share/certs
       # Persisting CKAN Solr Cores
       - ./solr/ckan_registry__dev:/var/solr/data/ckan_registry__dev
       - ./solr/ckan_portal__dev:/var/solr/data/ckan_portal__dev
@@ -183,7 +183,7 @@ services:
       SOLR_USER: solr
       SOLR_GROUP: solr
       ROOT_PASS: Docker!
-    user: "root:root"
+    user: "${USER_ID:-0}:${GROUP_ID:-0}"
     expose:
       - 8983
     ports:
