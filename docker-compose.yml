@@ -152,8 +152,6 @@ services:
       - ./solr/core_sd_search__dev:/var/solr/data/core_sd_search__dev
       # Persisting Drupal Solr Cores
       - ./solr/drupal_content__dev:/var/solr/data/drupal_content__dev
-      # Base Solr Cores
-      - ./docker/config/solr/cores:/var/solr/local_data
       # Persisting CKAN Test Solr Cores
       - ./solr/ckan_registry:/var/solr/data/test__ckan_registry
       - ./solr/ckan_portal:/var/solr/data/test__ckan_portal
