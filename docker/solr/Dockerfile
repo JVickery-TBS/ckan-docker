@@ -4,12 +4,8 @@ USER root
 
 RUN /opt/solr/bin/solr stop -all
 
-# Create root data directory
-RUN mkdir -p /var/solr/data
+RUN chown solr:root -R /var/solr
 
-# Set new files with correct user:group
-RUN mkdir -p /var/solr/data && \
-    chown -R solr:root /var/solr/data && \
-    chmod +x /usr/local/bin/start
+USER solr
 
-CMD ["/usr/local/bin/start"]
+CMD ["/usr/local/bin/start", "-force"]
