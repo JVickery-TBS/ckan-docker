@@ -26,8 +26,8 @@ pip install -e 'git+https://github.com/JVickery-TBS/ckan.git#egg=ckan' -r 'https
 pip install -e 'git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/dev-requirements.txt'
 # install scheming
 pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming' -r 'https://raw.githubusercontent.com/ckan/ckanext-scheming/master/test-requirements.txt'
-# install fluent
-pip install -e 'git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/requirements.txt'
+# install forked fluent
+pip install -e 'git+https://github.com/JVickery-TBS/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-fluent/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-fluent/master/requirements.txt'
 # install forked dcat
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-dcat.git#egg=ckanext-dcat' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/requirements.txt'
 # install dev extension
