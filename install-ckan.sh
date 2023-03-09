@@ -24,6 +24,8 @@ pip install wheel
 pip install -e 'git+https://github.com/JVickery-TBS/ckan.git#egg=ckan' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/dev-requirements.txt'
 # install xloader
 pip install -e 'git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/dev-requirements.txt'
+# dcat
+pip install -e 'git+https://github.com/JVickery-TBS/ckanext-dcat.git#egg=ckanext-dcat' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/requirements.txt'
 # install flask admin
 pip install Flask-Admin
 # install flask login
