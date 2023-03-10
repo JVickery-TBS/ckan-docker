@@ -32,6 +32,8 @@ pip install -e 'git+https://github.com/JVickery-TBS/ckanext-fluent.git#egg=ckane
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-dcat.git#egg=ckanext-dcat' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/requirements.txt'
 # install dev extension
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-development.git#egg=ckanext-development' -r 'https://github.com/JVickery-TBS/ckanext-development/edit/master/requirements.txt' -r 'https://github.com/JVickery-TBS/ckanext-development/edit/master/dev-requirements.txt'
+# install dev theme extension
+pip install -e 'git+https://github.com/JVickery-TBS/ckanext-dev-theme.git#egg=ckanext-dev-theme' -r 'https://github.com/JVickery-TBS/ckanext-dev-theme/edit/master/requirements.txt' -r 'https://github.com/JVickery-TBS/ckanext-dev-theme/edit/master/dev-requirements.txt'
 # install flask admin
 pip install Flask-Admin
 # install flask login
