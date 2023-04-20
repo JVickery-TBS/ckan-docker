@@ -19,7 +19,6 @@ pip install setuptools==44.1.0
 pip install --upgrade pip
 # install wheel
 pip install wheel
-# update certifi
 # install forked ckan core
 pip install -e 'git+https://github.com/JVickery-TBS/ckan.git#egg=ckan' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/dev-requirements.txt'
 # install xloader
@@ -30,6 +29,8 @@ pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-sch
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-fluent/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-fluent/master/requirements.txt'
 # install forked dcat
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-dcat.git#egg=ckanext-dcat' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/requirements.txt'
+# install forked cloudstorage
+pip install -e 'git+https://github.com/JVickery-TBS/ckanext-cloudstorage.git#egg=ckanext-cloudstorage' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-cloudstorage/master/requirements.txt'
 # install dev extension
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-development.git#egg=ckanext-development' -r 'https://github.com/JVickery-TBS/ckanext-development/edit/master/requirements.txt' -r 'https://github.com/JVickery-TBS/ckanext-development/edit/master/dev-requirements.txt'
 # install dev theme extension

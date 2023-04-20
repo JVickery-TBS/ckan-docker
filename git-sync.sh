@@ -37,11 +37,19 @@ if [[ $1 ]]; then
     LOCAL_WORKTREE="./ckan/registry/src/ckanext-fluent"
     UPSTREAM="https://github.com/ckan/ckanext-fluent.git"
 
+  elif [[ "$1" == "cloudstorage" ]]; then
+
+    printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}CLOUDSTORAGE${HAIR}${NC}${EOL}"
+
+    LOCAL_GITDIR="./ckan/registry/src/ckanext-cloudstorage/.git"
+    LOCAL_WORKTREE="./ckan/registry/src/ckanext-cloudstorage"
+    UPSTREAM="https://github.com/datopian/ckanext-cloudstorage.git"
+
   else
 
     printf "${EOL}${Yellow}Please supply a valid argument (ckan, dcat, fluent)${NC}${EOL}${EOL}"
     return
-  
+
   fi;
 
 else
