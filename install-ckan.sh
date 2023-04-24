@@ -51,6 +51,11 @@ pip install responses
 pip install uwsgi
 # install paster
 pip install paster
+pip install PasteScript==3.3.0
+pip install PasteDeploy==3.0.1
+pip install paste==3.5.2
+# install routes
+pip install Routes
 
 # pytests stuffs
 pip install beautifulsoup4==4.10.0
