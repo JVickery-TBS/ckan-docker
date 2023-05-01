@@ -21,8 +21,8 @@ pip install --upgrade pip
 pip install wheel
 # install forked ckan core
 pip install -e 'git+https://github.com/JVickery-TBS/ckan.git#egg=ckan' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/dev-requirements.txt'
-# install xloader
-pip install -e 'git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/ckan/ckanext-xloader/master/dev-requirements.txt'
+# install forked xloader
+pip install -e 'git+https://github.com/JVickery-TBS/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-xloader/master/dev-requirements.txt'
 # install scheming
 pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming' -r 'https://raw.githubusercontent.com/ckan/ckanext-scheming/master/test-requirements.txt'
 # install forked fluent
