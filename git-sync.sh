@@ -11,6 +11,8 @@ EOL='\n'
 BOLD='\033[1m'
 HAIR='\033[0m'
 
+MAIN_BRANCH_NAME="master"
+
 if [[ $1 ]]; then
 
   if [[ "$1" == "ckan" ]]; then
@@ -20,6 +22,23 @@ if [[ $1 ]]; then
     LOCAL_GITDIR="./ckan/registry/src/ckan/.git"
     LOCAL_WORKTREE="./ckan/registry/src/ckan"
     UPSTREAM="https://github.com/ckan/ckan.git"
+
+  elif [[ "$1" == "cloudstorage" ]]; then
+
+    printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}CLOUDSTORAGE${HAIR}${NC}${EOL}"
+
+    LOCAL_GITDIR="./ckan/registry/src/ckanext-cloudstorage/.git"
+    LOCAL_WORKTREE="./ckan/registry/src/ckanext-cloudstorage"
+    UPSTREAM="https://github.com/datopian/ckanext-cloudstorage.git"
+
+  elif [[ "$1" == "csrf" ]]; then
+
+    printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}CSRF FILTER${HAIR}${NC}${EOL}"
+
+    LOCAL_GITDIR="./ckan/registry/src/ckanext-csrf-filter/.git"
+    LOCAL_WORKTREE="./ckan/registry/src/ckanext-csrf-filter"
+    UPSTREAM="https://github.com/qld-gov-au/ckanext-csrf-filter.git"
+    MAIN_BRANCH_NAME="main"
 
   elif [[ "$1" == "dcat" ]]; then
 
@@ -37,13 +56,21 @@ if [[ $1 ]]; then
     LOCAL_WORKTREE="./ckan/registry/src/ckanext-fluent"
     UPSTREAM="https://github.com/ckan/ckanext-fluent.git"
 
-  elif [[ "$1" == "cloudstorage" ]]; then
+  elif [[ "$1" == "scheming" ]]; then
 
-    printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}CLOUDSTORAGE${HAIR}${NC}${EOL}"
+    printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}SCHEMING${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-cloudstorage/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-cloudstorage"
-    UPSTREAM="https://github.com/datopian/ckanext-cloudstorage.git"
+    LOCAL_GITDIR="./ckan/registry/src/ckanext-scheming/.git"
+    LOCAL_WORKTREE="./ckan/registry/src/ckanext-scheming"
+    UPSTREAM="https://github.com/ckan/ckanext-scheming.git"
+
+  elif [[ "$1" == "validation" ]]; then
+
+    printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}VALIDATION${HAIR}${NC}${EOL}"
+
+    LOCAL_GITDIR="./ckan/registry/src/ckanext-validation/.git"
+    LOCAL_WORKTREE="./ckan/registry/src/ckanext-validation"
+    UPSTREAM="https://github.com/frictionlessdata/ckanext-validation.git"
 
   elif [[ "$1" == "xloader" ]]; then
 
@@ -52,17 +79,19 @@ if [[ $1 ]]; then
     LOCAL_GITDIR="./ckan/registry/src/ckanext-xloader/.git"
     LOCAL_WORKTREE="./ckan/registry/src/ckanext-xloader"
     UPSTREAM="https://github.com/ckan/ckanext-xloader.git"
+    EXTRA_UPSTREAM_1="https://github.com/qld-gov-au/ckanext-xloader.git"
+    EXTRA_UPSTREAM_1_NAME="queensland"
 
   else
 
-    printf "${EOL}${Yellow}Please supply a valid argument (ckan, dcat, fluent)${NC}${EOL}${EOL}"
+    printf "${EOL}${Yellow}Please supply a valid argument (ckan, cloudstorage, csrf, dcat, fluent, scheming, validation, xloader)${NC}${EOL}${EOL}"
     return
 
   fi;
 
 else
 
-  printf "${EOL}${Yellow}Please supply an argument (ckan, dcat, fluent)${NC}${EOL}${EOL}"
+  printf "${EOL}${Yellow}Please supply an argument (ckan, cloudstorage, csrf, dcat, fluent, scheming, validation, xloader)${NC}${EOL}${EOL}"
   return
 
 fi;
@@ -71,9 +100,18 @@ fi;
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} remote add upstream ${UPSTREAM} || true
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} fetch upstream
 
-git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} checkout master
+git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} checkout ${MAIN_BRANCH_NAME}
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} fetch origin
-git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} reset --hard upstream/master
-git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} push origin master --force
+git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} reset --hard upstream/${MAIN_BRANCH_NAME}
+git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} push origin ${MAIN_BRANCH_NAME} --force
+
+if [[ $EXTRA_UPSTREAM_1 && $EXTRA_UPSTREAM_1_NAME ]]; then
+
+  printf "${EOL}${Cyan}Fetching extra upstream ${BOLD}${EXTRA_UPSTREAM_1_NAME}${HAIR}${Cyan} from ${BOLD}${EXTRA_UPSTREAM_1}${HAIR}${NC}${EOL}"
+
+  git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} remote add ${EXTRA_UPSTREAM_1_NAME} ${EXTRA_UPSTREAM_1} || true
+  git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} fetch ${EXTRA_UPSTREAM_1_NAME}
+
+fi;
 
 printf "${EOL}${Cyan}${BOLD}Done!${HAIR}${NC}${EOL}${EOL}"

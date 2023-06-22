@@ -24,13 +24,17 @@ pip install -e 'git+https://github.com/JVickery-TBS/ckan.git#egg=ckan' -r 'https
 # install forked xloader
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-xloader/master/dev-requirements.txt'
 # install scheming
-pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming' -r 'https://raw.githubusercontent.com/ckan/ckanext-scheming/master/test-requirements.txt'
+pip install -e 'git+https://github.com/JVickery-TBS/ckanext-scheming.git#egg=ckanext-scheming' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-scheming/master/test-requirements.txt'
 # install forked fluent
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-fluent/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-fluent/master/requirements.txt'
 # install forked dcat
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-dcat.git#egg=ckanext-dcat' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/dev-requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dcat/master/requirements.txt'
 # install forked cloudstorage
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-cloudstorage.git#egg=ckanext-cloudstorage' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-cloudstorage/master/requirements.txt'
+# install forked validation
+pip install -e 'git+https://github.com/JVickery-TBS/ckanext-validation.git#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-validation/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-validation/master/dev-requirements.txt'
+# install forked csrf filter
+pip install -e 'git+https://github.com/JVickery-TBS/ckanext-csrf-filter.git#egg=ckanext-csrf-filter' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-csrf-filter/main/requirements.txt'
 # install dev extension
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-development.git#egg=ckanext-development' -r 'https://github.com/JVickery-TBS/ckanext-development/edit/master/requirements.txt' -r 'https://github.com/JVickery-TBS/ckanext-development/edit/master/dev-requirements.txt'
 # install dev theme extension
