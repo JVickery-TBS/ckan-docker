@@ -35,6 +35,8 @@ pip install -e 'git+https://github.com/JVickery-TBS/ckanext-cloudstorage.git#egg
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-validation.git#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-validation/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-validation/master/dev-requirements.txt'
 # install forked csrf filter
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-csrf-filter.git#egg=ckanext-csrf-filter' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-csrf-filter/main/requirements.txt'
+# install forked ckanapi
+pip install -e 'git+https://github.com/JVickery-TBS/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanapi/master/requirements.txt'
 # install dev extension
 pip install -e 'git+https://github.com/JVickery-TBS/ckanext-development.git#egg=ckanext-development' -r 'https://github.com/JVickery-TBS/ckanext-development/edit/master/requirements.txt' -r 'https://github.com/JVickery-TBS/ckanext-development/edit/master/dev-requirements.txt'
 # install dev theme extension
