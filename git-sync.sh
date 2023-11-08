@@ -11,7 +11,7 @@ EOL='\n'
 BOLD='\033[1m'
 HAIR='\033[0m'
 
-MAIN_BRANCH_NAME="master"
+BRANCH_NAME="master"
 
 if [[ $1 ]]; then
 
@@ -46,7 +46,7 @@ if [[ $1 ]]; then
     LOCAL_GITDIR="./ckan/registry/src/ckanext-csrf-filter/.git"
     LOCAL_WORKTREE="./ckan/registry/src/ckanext-csrf-filter"
     UPSTREAM="https://github.com/qld-gov-au/ckanext-csrf-filter.git"
-    MAIN_BRANCH_NAME="main"
+    BRANCH_NAME="main"
 
   elif [[ "$1" == "dcat" ]]; then
 
@@ -71,6 +71,14 @@ if [[ $1 ]]; then
     LOCAL_GITDIR="./ckan/registry/src/ckanext-scheming/.git"
     LOCAL_WORKTREE="./ckan/registry/src/ckanext-scheming"
     UPSTREAM="https://github.com/ckan/ckanext-scheming.git"
+
+  elif [[ "$1" == "security" ]]; then
+
+    printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}SECURITY${HAIR}${NC}${EOL}"
+
+    LOCAL_GITDIR="./ckan/registry/src/ckanext-security/.git"
+    LOCAL_WORKTREE="./ckan/registry/src/ckanext-security"
+    UPSTREAM="https://github.com/data-govt-nz/ckanext-security.git"
 
   elif [[ "$1" == "validation" ]]; then
 
@@ -104,14 +112,19 @@ else
 
 fi;
 
+if [[ "$2" ]]; then
+
+  BRANCH_NAME="$2"
+
+fi;
 
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} remote add upstream ${UPSTREAM} || true
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} fetch upstream
 
-git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} checkout ${MAIN_BRANCH_NAME}
+git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} checkout ${BRANCH_NAME}
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} fetch origin
-git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} reset --hard upstream/${MAIN_BRANCH_NAME}
-git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} push origin ${MAIN_BRANCH_NAME} --force
+git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} reset --hard upstream/${BRANCH_NAME}
+git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} push origin ${BRANCH_NAME} --force
 
 if [[ $EXTRA_UPSTREAM_1 && $EXTRA_UPSTREAM_1_NAME ]]; then
 
