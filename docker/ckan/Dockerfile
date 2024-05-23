@@ -23,6 +23,7 @@ RUN apt-get update -yqq \
         nano \
         vim \
         iputils-ping \
+        procps \
     && npm install -g less \
     && npm install less \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
