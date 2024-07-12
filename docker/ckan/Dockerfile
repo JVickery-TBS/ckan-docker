@@ -1,42 +1,67 @@
-FROM openknowledge/ckan-dev:2.10
-FROM php:7.4-fpm
+FROM ckan/ckan-dev:master
+FROM debian:bullseye-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+WORKDIR /srv/app
 
 RUN apt-get update -yqq \
+    && apt-get install -y --no-install-recommends \
+        curl \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y --no-install-recommends \
         nodejs \
+        npm \
+        gcc \
         supervisor \
+        build-essential \
 		git \
 		libzip-dev \
         zip \
         unzip \
         wget \
-        python3-dev \
-        python3-venv \
         postgresql \
         libpq-dev \
         libpcre3 \
         libpcre3-dev \
-        virtualenv \
+        libmagic-dev \
         redis-server \
-        curl \
         nano \
         vim \
-        iputils-ping \
-        procps \
+        sudo \
+        systemd \
+        sysvinit-utils \
+        build-essential \
+        zlib1g-dev \
+        libncurses5-dev \
+        libgdbm-dev \
+        libnss3-dev \
+        libssl-dev \
+        libsqlite3-dev \
+        libreadline-dev \
+        libffi-dev \
+        libbz2-dev \
     && npm install -g less \
     && npm install less \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql zip \
-    && docker-php-ext-enable pdo_pgsql pgsql
+    && wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz \
+    && tar -xf Python-3.10.14.tgz \
+    && cd Python-3.10.14 \
+    && ./configure --enable-shared \
+    && make -j 10 \
+    && sudo make altinstall \
+    && sudo ldconfig /usr/local/bin/python3.10 \
+    && sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 1 \
+    && sudo update-alternatives --config python3 \
+    && sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.10 1 \
+    && sudo update-alternatives --config python
 
 # Supervisor
 ADD docker/config/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 ADD docker/config/supervisor/conf.d/*.conf /etc/supervisor/conf.d-available/
 
-# PIP2
-# RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py \
-#     && python2 get-pip.py
+# PIP 3.10
+RUN curl https://bootstrap.pypa.io/get-pip.py | sudo python3.10
+RUN pip install supervisor
 
 ADD docker/start.sh /usr/local/bin/start
 
@@ -69,7 +94,7 @@ RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
         alias l="ls $LS_OPTIONS -lA"\n\
         alias home="cd /srv/app"' >> /srv/app/.bashrc &&\
         chown ckan:ckan /srv/app/.bashrc \
-;fi
+;fi && chown ckan:ckan -R /etc/supervisor
 
 RUN chown ckan:ckan -R /srv/app
 

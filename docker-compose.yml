@@ -78,7 +78,7 @@ services:
 #
   postgres-devm:
     container_name: devm-og-postgres
-    image: postgres:9.6
+    image: postgres:13.14
     restart: always
     healthcheck:
       test: pg_isready -U postgres || exit 1
