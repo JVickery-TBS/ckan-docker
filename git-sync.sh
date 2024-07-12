@@ -39,15 +39,6 @@ if [[ $1 ]]; then
     LOCAL_WORKTREE="./ckan/registry/src/ckanext-cloudstorage"
     UPSTREAM="https://github.com/datopian/ckanext-cloudstorage.git"
 
-  elif [[ "$1" == "csrf" ]]; then
-
-    printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}CSRF FILTER${HAIR}${NC}${EOL}"
-
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-csrf-filter/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-csrf-filter"
-    UPSTREAM="https://github.com/qld-gov-au/ckanext-csrf-filter.git"
-    BRANCH_NAME="main"
-
   elif [[ "$1" == "dcat" ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}DCAT${HAIR}${NC}${EOL}"
@@ -100,14 +91,14 @@ if [[ $1 ]]; then
 
   else
 
-    printf "${EOL}${Yellow}Please supply a valid argument (ckan, ckanapi, cloudstorage, csrf, dcat, fluent, scheming, validation, xloader)${NC}${EOL}${EOL}"
+    printf "${EOL}${Yellow}Please supply a valid argument (ckan, ckanapi, cloudstorage, dcat, fluent, scheming, validation, xloader)${NC}${EOL}${EOL}"
     return
 
   fi;
 
 else
 
-  printf "${EOL}${Yellow}Please supply an argument (ckan, ckanapi, cloudstorage, csrf, dcat, fluent, scheming, validation, xloader)${NC}${EOL}${EOL}"
+  printf "${EOL}${Yellow}Please supply an argument (ckan, ckanapi, cloudstorage, dcat, fluent, scheming, validation, xloader)${NC}${EOL}${EOL}"
   return
 
 fi;
