@@ -78,6 +78,8 @@ if [[ $1 ]]; then
     LOCAL_GITDIR="./ckan/registry/src/ckanext-validation/.git"
     LOCAL_WORKTREE="./ckan/registry/src/ckanext-validation"
     UPSTREAM="https://github.com/frictionlessdata/ckanext-validation.git"
+    EXTRA_UPSTREAM_1="https://github.com/qld-gov-au/ckanext-validation.git"
+    EXTRA_UPSTREAM_1_NAME="queensland"
 
   elif [[ "$1" == "xloader" ]]; then
 
