@@ -19,64 +19,64 @@ if [[ $1 ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}CKAN${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckan/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckan"
+    LOCAL_GITDIR="./ckan/src/ckan/.git"
+    LOCAL_WORKTREE="./ckan/src/ckan"
     UPSTREAM="https://github.com/ckan/ckan.git"
 
   elif [[ "$1" == "ckanapi" ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}CKAN API${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanapi/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanapi"
+    LOCAL_GITDIR="./ckan/src/ckanapi/.git"
+    LOCAL_WORKTREE="./ckan/src/ckanapi"
     UPSTREAM="https://github.com/ckan/ckanapi.git"
 
   elif [[ "$1" == "cloudstorage" ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}CLOUDSTORAGE${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-cloudstorage/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-cloudstorage"
+    LOCAL_GITDIR="./ckan/src/ckanext-cloudstorage/.git"
+    LOCAL_WORKTREE="./ckan/src/ckanext-cloudstorage"
     UPSTREAM="https://github.com/datopian/ckanext-cloudstorage.git"
 
   elif [[ "$1" == "dcat" ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}DCAT${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-dcat/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-dcat"
+    LOCAL_GITDIR="./ckan/src/ckanext-dcat/.git"
+    LOCAL_WORKTREE="./ckan/src/ckanext-dcat"
     UPSTREAM="https://github.com/ckan/ckanext-dcat.git"
 
   elif [[ "$1" == "fluent" ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}FLUENT${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-fluent/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-fluent"
+    LOCAL_GITDIR="./ckan/src/ckanext-fluent/.git"
+    LOCAL_WORKTREE="./ckan/src/ckanext-fluent"
     UPSTREAM="https://github.com/ckan/ckanext-fluent.git"
 
   elif [[ "$1" == "scheming" ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}SCHEMING${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-scheming/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-scheming"
+    LOCAL_GITDIR="./ckan/src/ckanext-scheming/.git"
+    LOCAL_WORKTREE="./ckan/src/ckanext-scheming"
     UPSTREAM="https://github.com/ckan/ckanext-scheming.git"
 
   elif [[ "$1" == "security" ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}SECURITY${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-security/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-security"
+    LOCAL_GITDIR="./ckan/src/ckanext-security/.git"
+    LOCAL_WORKTREE="./ckan/src/ckanext-security"
     UPSTREAM="https://github.com/data-govt-nz/ckanext-security.git"
 
   elif [[ "$1" == "validation" ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}VALIDATION${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-validation/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-validation"
+    LOCAL_GITDIR="./ckan/src/ckanext-validation/.git"
+    LOCAL_WORKTREE="./ckan/src/ckanext-validation"
     UPSTREAM="https://github.com/frictionlessdata/ckanext-validation.git"
     EXTRA_UPSTREAM_1="https://github.com/qld-gov-au/ckanext-validation.git"
     EXTRA_UPSTREAM_1_NAME="queensland"
@@ -85,8 +85,8 @@ if [[ $1 ]]; then
 
     printf "${EOL}${Cyan}Syncing local master to upstream master for ${BOLD}XLOADER${HAIR}${NC}${EOL}"
 
-    LOCAL_GITDIR="./ckan/registry/src/ckanext-xloader/.git"
-    LOCAL_WORKTREE="./ckan/registry/src/ckanext-xloader"
+    LOCAL_GITDIR="./ckan/src/ckanext-xloader/.git"
+    LOCAL_WORKTREE="./ckan/src/ckanext-xloader"
     UPSTREAM="https://github.com/ckan/ckanext-xloader.git"
     EXTRA_UPSTREAM_1="https://github.com/qld-gov-au/ckanext-xloader.git"
     EXTRA_UPSTREAM_1_NAME="queensland"

@@ -9,16 +9,16 @@ psql -v ON_ERROR_STOP=0 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     CREATE DATABASE og_drupal_local__dev;
     CREATE DATABASE og_ckan_portal_local__dev;
     CREATE DATABASE og_ckan_portal_ds_local__dev;
-    CREATE DATABASE og_ckan_registry_local__dev;
-    CREATE DATABASE og_ckan_registry_ds_local__dev;
+    CREATE DATABASE og_ckan_local__dev;
+    CREATE DATABASE og_ckan_ds_local__dev;
     GRANT ALL PRIVILEGES ON DATABASE og_drupal_local__dev TO homestead;
     GRANT ALL PRIVILEGES ON DATABASE og_ckan_portal_local__dev TO homestead;
     GRANT ALL PRIVILEGES ON DATABASE og_ckan_portal_ds_local__dev TO homestead;
-    GRANT ALL PRIVILEGES ON DATABASE og_ckan_registry_local__dev TO homestead;
-    GRANT ALL PRIVILEGES ON DATABASE og_ckan_registry_ds_local__dev TO homestead;
+    GRANT ALL PRIVILEGES ON DATABASE og_ckan_local__dev TO homestead;
+    GRANT ALL PRIVILEGES ON DATABASE og_ckan_ds_local__dev TO homestead;
     GRANT ALL PRIVILEGES ON DATABASE og_drupal_local__dev TO homestead_reader;
     GRANT ALL PRIVILEGES ON DATABASE og_ckan_portal_local__dev TO homestead_reader;
     GRANT ALL PRIVILEGES ON DATABASE og_ckan_portal_ds_local__dev TO homestead_reader;
-    GRANT ALL PRIVILEGES ON DATABASE og_ckan_registry_local__dev TO homestead_reader;
-    GRANT ALL PRIVILEGES ON DATABASE og_ckan_registry_ds_local__dev TO homestead_reader;
+    GRANT ALL PRIVILEGES ON DATABASE og_ckan_local__dev TO homestead_reader;
+    GRANT ALL PRIVILEGES ON DATABASE og_ckan_ds_local__dev TO homestead_reader;
 EOSQL

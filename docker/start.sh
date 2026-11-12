@@ -4,7 +4,7 @@ set -e
 
 env=${DOCKER_ENV:-production}
 role=${CONTAINER_ROLE:-app}
-ckanRole=${CKAN_ROLE:-registry}
+ckanRole=${CKAN_ROLE:-ckan}
 
 Cyan='\033[0;36m'
 Yellow='\033[1;33m'
@@ -24,16 +24,16 @@ printf "${Cyan}The role is ${BOLD}$role${HAIR}${NC}${EOL}"
 
 if [[ "$role" = "ckan" ]]; then
 #
-# CKAN Registry & Portal
+# CKAN
 #
 
     printf "${Cyan}The CKAN role is ${BOLD}$ckanRole${HAIR}${NC}${EOL}"
 
     # link ckan supervisord config
-    ln -sf /etc/supervisor/conf.d-available/ckan-${ckanRole}.conf /etc/supervisor/conf.d/ckan-${ckanRole}.conf
+    ln -sf /etc/supervisor/conf.d-available/ckan.conf /etc/supervisor/conf.d/ckan.conf
 
     # create directory for python venv
-    mkdir -p ${APP_ROOT}/ckan/${ckanRole}
+    mkdir -p ${APP_ROOT}/ckan
 
     # create directory for ckan static files
     mkdir -p ${APP_ROOT}/ckan/static_files
@@ -42,65 +42,44 @@ if [[ "$role" = "ckan" ]]; then
     mkdir -p /dev
     chown -R ckan:ckan /dev
 
-    # create i18n paths
-    if [[ -d "/srv/app/ckan/${ckanRole}/src/ckanext-canada" ]]; then
-        mkdir -p /srv/app/ckan/${ckanRole}/src/ckanext-canada/build;
+    if [[ -d "/srv/app/ckan/src/ckan" ]]; then
+        mkdir -p /srv/app/ckan/src/ckan/build;
         if [[ $? -eq 0 ]]; then
-            printf "${Green}Created /srv/app/ckan/${ckanRole}/src/ckanext-canada/build${NC}${EOL}";
+            printf "${Green}Created /srv/app/ckan/src/ckan/build${NC}${EOL}";
         else
-            printf "${Red}FAILED to create /srv/app/ckan/${ckanRole}/src/ckanext-canada/build (directory may already exist)${NC}${EOL}";
-        fi;
-    fi;
-
-    if [[ -d "/srv/app/ckan/${ckanRole}/src/ckan" ]]; then
-        mkdir -p /srv/app/ckan/${ckanRole}/src/ckan/build;
-        if [[ $? -eq 0 ]]; then
-            printf "${Green}Created /srv/app/ckan/${ckanRole}/src/ckan/build${NC}${EOL}";
-        else
-            printf "${Red}FAILED to create /srv/app/ckan/${ckanRole}/src/ckan/build (directory may already exist)${NC}${EOL}";
+            printf "${Red}FAILED to create /srv/app/ckan/src/ckan/build (directory may already exist)${NC}${EOL}";
         fi;
     fi;
 
     # copy the ckan configs
-    printf "${Green}Copying the ${ckanRole} configuration file to the virtual environment${NC}${EOL}"
-    cp ${APP_ROOT}/${ckanRole}.ini ${APP_ROOT}/ckan/${ckanRole}/${ckanRole}.ini
-    cp ${APP_ROOT}/${ckanRole}_test.ini ${APP_ROOT}/ckan/${ckanRole}/test.ini
+    printf "${Green}Copying the ckan configuration file to the virtual environment${NC}${EOL}"
+    cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/ckan.ini
+    cp ${APP_ROOT}/ckan_test.ini ${APP_ROOT}/ckan/test.ini
 
     # copy the wsgi.py files
-    printf "${Green}Copying the ${ckanRole} wsgi configuration file to the virtual environment${NC}${EOL}"
-    cp ${APP_ROOT}/docker/config/ckan/wsgi/${ckanRole}.py ${APP_ROOT}/ckan/${ckanRole}/wsgi.py
-    chown ckan:ckan ${APP_ROOT}/ckan/${ckanRole}/wsgi.py
+    printf "${Green}Copying the ckan wsgi configuration file to the virtual environment${NC}${EOL}"
+    cp ${APP_ROOT}/docker/config/ckan/wsgi/ckan.py ${APP_ROOT}/ckan/wsgi.py
+    chown ckan:ckan ${APP_ROOT}/ckan/wsgi.py
 
     # create storage paths
     printf "${Green}Generating storage directory${NC}${EOL}"
-    mkdir -p ${APP_ROOT}/ckan/${ckanRole}/storage
-    chown -R ckan:ckan ${APP_ROOT}/ckan/${ckanRole}/storage
+    mkdir -p ${APP_ROOT}/ckan/storage
+    chown -R ckan:ckan ${APP_ROOT}/ckan/storage
 
     # create cache paths
     printf "${Green}Generating cache directory${NC}${EOL}"
-    mkdir -p ${APP_ROOT}/ckan/${ckanRole}/tmp
-    chown -R ckan:ckan ${APP_ROOT}/ckan/${ckanRole}/tmp
-
-    # copy ckanext-canada static to static_files
-    if [[ -d "${APP_ROOT}/ckan/${ckanRole}/src/ckanext-canada/ckanext/canada/public/static" ]]; then
-        cp -R ${APP_ROOT}/ckan/${ckanRole}/src/ckanext-canada/ckanext/canada/public/static ${APP_ROOT}/ckan/static_files/;
-        if [[ $? -eq 0 ]]; then
-            printf "${Green}Copied ${APP_ROOT}/ckan/${ckanRole}/src/ckanext-canada/ckanext/canada/public/static to ${APP_ROOT}/ckan/static_files/static${NC}${EOL}";
-        else
-            printf "${Red}FAILED to copy ${APP_ROOT}/ckan/${ckanRole}/src/ckanext-canada/ckanext/canada/public/static to ${APP_ROOT}/ckan/static_files/static${NC}${EOL}";
-        fi;
-        chown -R ckan:ckan ${APP_ROOT}/ckan/static_files
-    fi;
+    mkdir -p ${APP_ROOT}/ckan/tmp
+    chown -R ckan:ckan ${APP_ROOT}/ckan/tmp
 
     # copy licenses file
-    cp ${APP_ROOT}/licenses.json ${APP_ROOT}/ckan/${ckanRole}/licenses.json
+    cp ${APP_ROOT}/licenses.json ${APP_ROOT}/ckan/licenses.json
 
     # start supervisord service
     printf "${Green}Executing supervisord${NC}${EOL}"
     supervisord -c /etc/supervisor/supervisord.conf
 
 # END
-# CKAN Registry & Portal
+# CKAN
 # END
 elif [[ "$role" = "scheduler" ]]; then
 

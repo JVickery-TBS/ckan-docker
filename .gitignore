@@ -19,6 +19,7 @@ node_modules/
 /ckan_test.ini
 /.env
 /.python.env
+/ckan__old
 
 # Build
 /*.1

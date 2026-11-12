@@ -2,7 +2,7 @@
 
 set -e
 
-CKAN_SITE_ID='registry'
+CKAN_SITE_ID='ckan_dev'
 REDIS_WORKER_TIMEOUT=15
 
 while read line
@@ -18,7 +18,7 @@ do
   else
     # there is no running job for the queue worker, make a new one.
     printf "$(date -u +'%Y-%m-%d %H:%M:%S,%3N') INFO  [redis-swarm-worker] Spinning up worker for Resource ${QUEUE_NAME}.\n";
-    ckan -c /srv/app/ckan/registry/registry.ini jobs worker $QUEUE_NAME --max-idle-time $REDIS_WORKER_TIMEOUT > /dev/null 2>&1 &
+    ckan -c /srv/app/ckan/ckan.ini jobs worker $QUEUE_NAME --max-idle-time $REDIS_WORKER_TIMEOUT > /dev/null 2>&1 &
     printf "$(date -u +'%Y-%m-%d %H:%M:%S,%3N') INFO  [redis-swarm-worker] Worker for Resource ${QUEUE_NAME} running on PID $!.\n";
   fi;
 done < "${1:-/dev/stdin}"

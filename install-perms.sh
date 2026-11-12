@@ -4,11 +4,11 @@
 # Set file permissions
 #
 # set file ownership for ckan files
-chown ckan:ckan -R ${APP_ROOT}/ckan/${CKAN_ROLE}
+chown ckan:ckan -R ${APP_ROOT}/ckan
 if [[ $? -eq 0 ]]; then
-    printf "${Green}${INDENT}${INDENT}Set ckan/${CKAN_ROLE} ownership to ckan:ckan: OK${NC}${EOL}"
+    printf "${Green}${INDENT}${INDENT}Set ckan ownership to ckan:ckan: OK${NC}${EOL}"
 else
-    printf "${Red}${INDENT}${INDENT}Set ckan/${CKAN_ROLE} ownership to ckan:ckan: FAIL${NC}${EOL}"
+    printf "${Red}${INDENT}${INDENT}Set ckan ownership to ckan:ckan: FAIL${NC}${EOL}"
 fi
 
 # set file ownership for ckan static files
@@ -20,13 +20,13 @@ else
 fi
 
 # initialize databases
-ckan -c ${APP_ROOT}/ckan/${CKAN_ROLE}/${CKAN_ROLE}.ini db init
+ckan -c ${APP_ROOT}/ckan/ckan.ini db init
 
 # initialize validation tables
-ckan -c ${APP_ROOT}/ckan/${CKAN_ROLE}/${CKAN_ROLE}.ini validation init-db
+ckan -c ${APP_ROOT}/ckan/ckan.ini validation init-db
 
 # set database permissions
-ckan -c ${APP_ROOT}/ckan/${CKAN_ROLE}/${CKAN_ROLE}.ini datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
+ckan -c ${APP_ROOT}/ckan/ckan.ini datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
 
 # END
 # Set file permissions

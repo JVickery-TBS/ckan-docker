@@ -17,20 +17,20 @@ read -r -p $'\n\n\033[0;31m    Are you sure you want delete the\033[1m existing 
 if [[ $doInstall == "true" ]]; then
 
   # nuke existing install
-  rm -rf ${APP_ROOT}/ckan/registry/*
-  rm -rf ${APP_ROOT}/ckan/registry/.??*
+  rm -rf ${APP_ROOT}/ckan/*
+  rm -rf ${APP_ROOT}/ckan/.??*
 
   # initiate python3 venv
-  python3 -m venv ${APP_ROOT}/ckan/registry
+  python3 -m venv ${APP_ROOT}/ckan
   # copy the config file
-  cp ${APP_ROOT}/registry.ini ${APP_ROOT}/ckan/registry/registry.ini
-  cp ${APP_ROOT}/registry_test.ini ${APP_ROOT}/ckan/registry/test.ini
+  cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/ckan.ini
+  cp ${APP_ROOT}/ckan_test.ini ${APP_ROOT}/ckan/test.ini
   # set ownership
   chown ckan:ckan -R ${APP_ROOT}/ckan
   # activate venv
-  . ${APP_ROOT}/ckan/registry/bin/activate
+  . ${APP_ROOT}/ckan/bin/activate
   # install setuptools
-  pip install setuptools==44.1.0
+  pip install setuptools==70.0.0
   # update pip
   pip install --upgrade pip
   # install wheel
@@ -63,47 +63,47 @@ if [[ $doInstall == "true" ]]; then
   # re-install ckan requirements
   pip install --force-reinstall -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/dev-requirements.txt'
   # run ckan setup
-  cd ${APP_ROOT}/ckan/registry/src/ckan
+  cd ${APP_ROOT}/ckan/src/ckan
   python setup.py develop
   cd ${APP_ROOT}
 
   # re-run ckan setup.py
-  cd ${APP_ROOT}/ckan/registry/src/ckan
+  cd ${APP_ROOT}/ckan/src/ckan
   python setup.py develop
   cd ${APP_ROOT}
 
   # copy the config file
-  cp ${APP_ROOT}/registry.ini ${APP_ROOT}/ckan/registry/registry.ini
-  cp ${APP_ROOT}/registry_test.ini ${APP_ROOT}/ckan/registry/test.ini
+  cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/ckan.ini
+  cp ${APP_ROOT}/ckan_test.ini ${APP_ROOT}/ckan/test.ini
 
   # make build directory
-  mkdir -p /srv/app/ckan/registry/src/ckan/build
+  mkdir -p /srv/app/ckan/src/ckan/build
 
   # set ownership
   chown ckan:ckan -R ${APP_ROOT}/ckan
 
   # database stuffs
-  ckan -c ${APP_ROOT}/ckan/registry/registry.ini db init
-  ckan -c ${APP_ROOT}/ckan/registry/registry.ini datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
-  ckan -c ${APP_ROOT}/ckan/registry/test.ini db init
-  ckan -c ${APP_ROOT}/ckan/registry/test.ini datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
+  ckan -c ${APP_ROOT}/ckan/ckan.ini db init
+  ckan -c ${APP_ROOT}/ckan/ckan.ini datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
+  ckan -c ${APP_ROOT}/ckan/test.ini db init
+  ckan -c ${APP_ROOT}/ckan/test.ini datastore set-permissions | psql -U homestead --set ON_ERROR_STOP=1
 
   # create sysadmin user
-  ckan -c ${APP_ROOT}/ckan/registry/registry.ini user add admin_local password=12345678 email=temp+admin@tbs-sct.gc.ca
-  ckan -c ${APP_ROOT}/ckan/registry/registry.ini sysadmin add admin_local
+  ckan -c ${APP_ROOT}/ckan/ckan.ini user add admin_local password=12345678 email=temp+admin@tbs-sct.gc.ca
+  ckan -c ${APP_ROOT}/ckan/ckan.ini sysadmin add admin_local
 
   # create normal user
-  ckan -c ${APP_ROOT}/ckan/registry/registry.ini user add user_local password=12345678 email=temp+user@tbs-sct.gc.ca
+  ckan -c ${APP_ROOT}/ckan/ckan.ini user add user_local password=12345678 email=temp+user@tbs-sct.gc.ca
 
   # deactivate venv
   deactivate
   # copy who.ini
-  cp ${APP_ROOT}/ckan/registry/src/ckan/who.ini ${APP_ROOT}/ckan/registry/who.ini
+  cp ${APP_ROOT}/ckan/src/ckan/who.ini ${APP_ROOT}/ckan/who.ini
   # copy local ini file
-  cp ${APP_ROOT}/registry.ini ${APP_ROOT}/ckan/registry/registry.ini
-  cp ${APP_ROOT}/registry_test.ini ${APP_ROOT}/ckan/registry/test.ini
+  cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/ckan.ini
+  cp ${APP_ROOT}/ckan_test.ini ${APP_ROOT}/ckan/test.ini
   # download license file
-  cp ${APP_ROOT}/licenses.json ${APP_ROOT}/ckan/registry/licenses.json
+  cp ${APP_ROOT}/licenses.json ${APP_ROOT}/ckan/licenses.json
   # set ownership
   chown ckan:ckan -R ${APP_ROOT}/ckan
 
