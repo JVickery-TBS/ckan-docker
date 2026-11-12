@@ -127,6 +127,11 @@ services:
       ckan-core-local-network:
         ipv4_address: 172.25.235.10
     volumes:
+      # Custom server stuffs
+      - ./solr/_bin:/opt/tbs/bin
+      - ./solr/_empty_core:/var/solr/data/_empty_core
+      # Custom configsets
+      - ./solr/configsets:/var/solr/data/configsets
       # Persisting CKAN Solr Cores
       - ./solr/ckan_registry:/var/solr/data/ckan_registry
       - ./solr/ckan_portal:/var/solr/data/ckan_portal

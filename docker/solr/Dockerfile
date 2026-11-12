@@ -1,8 +1,34 @@
-FROM opendatacanada/solr
+FROM opendatacanada/solr:9
 
 USER root
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN /opt/solr/bin/solr stop -all
+
+WORKDIR /srv/app
+
+RUN apt-get update -yqq \
+    && apt-get install -y --no-install-recommends \
+      build-essential \
+      zlib1g-dev \
+      libssl-dev \
+      libffi-dev \
+    && wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz \
+    && tar -xf Python-3.10.14.tgz \
+    && cd Python-3.10.14 \
+    && ./configure --enable-shared \
+    && make -j 10 \
+    && sudo make altinstall \
+    && sudo ldconfig /usr/local/bin/python3.10 \
+    && sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 1 \
+    && sudo update-alternatives --config python3 \
+    && sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.10 1 \
+    && sudo update-alternatives --config python
+
+# PIP 3.10
+RUN curl https://bootstrap.pypa.io/get-pip.py | sudo python3.10
+RUN pip install supervisor
 
 ARG USER_ID
 ARG GROUP_ID

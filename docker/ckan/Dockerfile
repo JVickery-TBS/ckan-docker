@@ -1,5 +1,5 @@
 FROM ckan/ckan-dev:master
-FROM debian:bullseye-slim
+FROM debian:bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -8,7 +8,7 @@ WORKDIR /srv/app
 RUN apt-get update -yqq \
     && apt-get install -y --no-install-recommends \
         curl \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && curl -fsSL https://deb.nodesource.com/setup_26.x | bash - \
     && apt-get install -y --no-install-recommends \
         nodejs \
         npm \
@@ -43,24 +43,39 @@ RUN apt-get update -yqq \
         libbz2-dev \
     && npm install -g less \
     && npm install less \
-    && wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz \
-    && tar -xf Python-3.10.14.tgz \
-    && cd Python-3.10.14 \
-    && ./configure --enable-shared \
+    && wget https://www.python.org/ftp/python/3.14.2/Python-3.14.2.tgz \
+    && tar -xf Python-3.14.2.tgz \
+    && cd Python-3.14.2 \
+    && ./configure --enable-shared --enable-optimizations \
     && make -j 10 \
-    && sudo make altinstall \
-    && sudo ldconfig /usr/local/bin/python3.10 \
-    && sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 1 \
+    && make altinstall \
+    && ldconfig /usr/local/bin/python3.14 \
+    && cd / \
+    && rm -rf Python-3.14.2 Python-3.14.2.tgz \
+    && rm -rf /var/lib/apt/lists/* \
+    && update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.14 1 \
     && sudo update-alternatives --config python3 \
-    && sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.10 1 \
+    && sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.14 1 \
     && sudo update-alternatives --config python
+
+# && wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz \
+# && tar -xf Python-3.10.14.tgz \
+# && cd Python-3.10.14 \
+# && ./configure --enable-shared \
+# && make -j 10 \
+# && sudo make altinstall \
+# && sudo ldconfig /usr/local/bin/python3.10 \
+# && sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 1 \
+# && sudo update-alternatives --config python3 \
+# && sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.10 1 \
+# && sudo update-alternatives --config python
 
 # Supervisor
 ADD docker/config/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 ADD docker/config/supervisor/conf.d/*.conf /etc/supervisor/conf.d-available/
 
-# PIP 3.10
-RUN curl https://bootstrap.pypa.io/get-pip.py | sudo python3.10
+# PIP 3.14
+RUN curl https://bootstrap.pypa.io/get-pip.py | sudo python3.14
 RUN pip install supervisor
 
 ADD docker/start.sh /usr/local/bin/start
