@@ -1,8 +1,11 @@
 # -- coding: utf-8 --
 
 # -- CKAN 2.10+ --
-
 import os
+import sys
+
+sys.path.insert(0, '/srv/app/ckan/src/ckan')
+
 from ckan.config.middleware import make_app
 from ckan.cli import CKANConfigLoader
 from logging.config import fileConfig as loggingFileConfig

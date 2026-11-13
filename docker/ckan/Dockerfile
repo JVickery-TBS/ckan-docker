@@ -1,7 +1,10 @@
 FROM ckan/ckan-dev:master
 FROM debian:bookworm
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PYTHONUTF8=1
 
 WORKDIR /srv/app
 

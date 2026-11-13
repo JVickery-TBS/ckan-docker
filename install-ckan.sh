@@ -81,8 +81,11 @@ if [[ $doInstall == "true" ]]; then
   # install uwsgi
   pip install uwsgi
 
+  mkdir -p ${APP_ROOT}/ckan/_vassals
+
   # copy the config file
   cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/ckan.ini
+  cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/_vassals/ckan.ini
   cp ${APP_ROOT}/ckan_test.ini ${APP_ROOT}/ckan/test.ini
 
   # make build directory
