@@ -1,6 +1,6 @@
 # -- coding: utf-8 --
 
-# -- CKAN 2.10 --
+# -- CKAN 2.10+ --
 
 import os
 from ckan.config.middleware import make_app

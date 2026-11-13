@@ -1,6 +1,7 @@
 # IDEs
 .idea/
 *.code-workspace
+*.vs_ignore
 
 # Package Managers
 vendor/

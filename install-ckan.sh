@@ -59,6 +59,12 @@ if [[ $doInstall == "true" ]]; then
   pip install -e 'git+https://github.com/JVickery-TBS/ckanext-dev-theme.git#egg=ckanext-dev-theme' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dev-theme/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckanext-dev-theme/master/dev-requirements.txt'
   # install gc notify extension
   pip install -e 'git+https://github.com/open-data/ckanext-gcnotify.git@develop#egg=ckanext-gcnotify' -r 'https://raw.githubusercontent.com/open-data/ckanext-gcnotify/develop/requirements.txt'
+  # install citeproc extension
+  pip install -e 'git+https://github.com/open-data/ckanext-citeproc.git@main#egg=ckanext-citeproc' -r 'https://raw.githubusercontent.com/open-data/ckanext-citeproc/main/requirements.txt'
+  # install datastore search extension
+  pip install -e 'git+https://github.com/open-data/ckanext-datastore-search.git@main#egg=ckanext-datastore-search' -r 'https://raw.githubusercontent.com/open-data/ckanext-datastore-search/main/requirements.txt'
+  # install mermaid view extension
+  pip install -e 'git+https://github.com/JVickery-TBS/ckanext-mermaid.git@main#egg=ckanext-mermaid'
 
   # re-install ckan requirements
   pip install --force-reinstall -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/requirements.txt' -r 'https://raw.githubusercontent.com/JVickery-TBS/ckan/master/dev-requirements.txt'
@@ -71,6 +77,9 @@ if [[ $doInstall == "true" ]]; then
   cd ${APP_ROOT}/ckan/src/ckan
   python setup.py develop
   cd ${APP_ROOT}
+
+  # install uwsgi
+  pip install uwsgi
 
   # copy the config file
   cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/ckan.ini
@@ -98,7 +107,7 @@ if [[ $doInstall == "true" ]]; then
   # deactivate venv
   deactivate
   # copy who.ini
-  cp ${APP_ROOT}/ckan/src/ckan/who.ini ${APP_ROOT}/ckan/who.ini
+  # cp ${APP_ROOT}/ckan/src/ckan/who.ini ${APP_ROOT}/ckan/who.ini
   # copy local ini file
   cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/ckan.ini
   cp ${APP_ROOT}/ckan_test.ini ${APP_ROOT}/ckan/test.ini
