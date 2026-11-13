@@ -60,8 +60,6 @@ if [[ "$role" = "ckan" ]]; then
     printf "${Green}Copying the ckan wsgi configuration file to the virtual environment${NC}${EOL}"
     cp ${APP_ROOT}/docker/config/ckan/wsgi/ckan.py ${APP_ROOT}/ckan/wsgi.py
     chown ckan:ckan ${APP_ROOT}/ckan/wsgi.py
-    cp ${APP_ROOT}/docker/config/ckan/wsgi/activate_this.py ${APP_ROOT}/ckan/bin/activate_this.py
-    chown ckan:ckan ${APP_ROOT}/ckan/bin/activate_this.py
 
     # create storage paths
     printf "${Green}Generating storage directory${NC}${EOL}"
