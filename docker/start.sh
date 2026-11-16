@@ -74,6 +74,10 @@ if [[ "$role" = "ckan" ]]; then
     mkdir -p ${APP_ROOT}/ckan/tmp
     chown -R ckan:ckan ${APP_ROOT}/ckan/tmp
 
+    # copy dev reload file
+    cp ${APP_ROOT}/reload.trigger ${APP_ROOT}/ckan/reload.trigger
+    chown ckan:ckan ${APP_ROOT}/ckan/reload.trigger
+
     # copy licenses file
     cp ${APP_ROOT}/licenses.json ${APP_ROOT}/ckan/licenses.json
 

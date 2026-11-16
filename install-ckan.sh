@@ -88,6 +88,9 @@ if [[ $doInstall == "true" ]]; then
   cp ${APP_ROOT}/ckan.ini ${APP_ROOT}/ckan/_vassals/ckan.ini
   cp ${APP_ROOT}/ckan_test.ini ${APP_ROOT}/ckan/test.ini
 
+  # copy dev reload file
+  cp ${APP_ROOT}/reload.trigger ${APP_ROOT}/ckan/reload.trigger
+
   # make build directory
   mkdir -p /srv/app/ckan/src/ckan/build
 
