@@ -115,9 +115,11 @@ git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} remote add upstream 
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} fetch upstream
 
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} checkout ${BRANCH_NAME}
+du -sh ${LOCAL_GITDIR}/objects
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} fetch origin
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} reset --hard upstream/${BRANCH_NAME}
 git --git-dir=${LOCAL_GITDIR} --work-tree=${LOCAL_WORKTREE} push origin ${BRANCH_NAME} --force
+du -sh ${LOCAL_GITDIR}/objects
 
 if [[ $EXTRA_UPSTREAM_1 && $EXTRA_UPSTREAM_1_NAME ]]; then
 
